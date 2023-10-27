@@ -6,8 +6,8 @@ class Song {
   String albumType;
   String urlAlbumSpotify;
   String releaseDate;
-  String songDuration;
-  String trackNumberOnTheAlbum;
+  int songDuration;
+  int trackNumberOnTheAlbum;
   int popularity;
   String urlToSongSpotify;
   String urlCover;
