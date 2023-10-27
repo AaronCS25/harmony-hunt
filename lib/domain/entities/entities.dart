@@ -6,3 +6,5 @@ export 'album/album.dart';
 
 export 'artist/artist_summary.dart';
 export 'artist/artist.dart';
+
+export 'track/track.dart';
