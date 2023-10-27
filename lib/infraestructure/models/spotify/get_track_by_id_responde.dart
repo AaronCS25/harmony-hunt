@@ -1,12 +1,12 @@
 class TrackByIdResponse {
-    final Album album;
-    final List<Artist> artists;
+    final TrackAlbum album;
+    final List<TrackArtist> artists;
     final List<dynamic> availableMarkets;
     final int discNumber;
     final int durationMs;
     final bool explicit;
-    final ExternalIds externalIds;
-    final ExternalUrls externalUrls;
+    final TrackExternalIds externalIds;
+    final TrackExternalUrls externalUrls;
     final String href;
     final String id;
     final bool isLocal;
@@ -38,14 +38,14 @@ class TrackByIdResponse {
     });
 
     factory TrackByIdResponse.fromJson(Map<String, dynamic> json) => TrackByIdResponse(
-        album: Album.fromJson(json["album"]),
-        artists: List<Artist>.from(json["artists"].map((x) => Artist.fromJson(x))),
+        album: TrackAlbum.fromJson(json["album"]),
+        artists: List<TrackArtist>.from(json["artists"].map((x) => TrackArtist.fromJson(x))),
         availableMarkets: List<dynamic>.from(json["available_markets"].map((x) => x)),
         discNumber: json["disc_number"],
         durationMs: json["duration_ms"],
         explicit: json["explicit"],
-        externalIds: ExternalIds.fromJson(json["external_ids"]),
-        externalUrls: ExternalUrls.fromJson(json["external_urls"]),
+        externalIds: TrackExternalIds.fromJson(json["external_ids"]),
+        externalUrls: TrackExternalUrls.fromJson(json["external_urls"]),
         href: json["href"],
         id: json["id"],
         isLocal: json["is_local"],
@@ -78,14 +78,14 @@ class TrackByIdResponse {
     };
 }
 
-class Album {
+class TrackAlbum {
     final String albumType;
-    final List<Artist> artists;
+    final List<TrackArtist> artists;
     final List<dynamic> availableMarkets;
-    final ExternalUrls externalUrls;
+    final TrackExternalUrls externalUrls;
     final String href;
     final String id;
-    final List<Image> images;
+    final List<TrackImage> images;
     final String name;
     final DateTime releaseDate;
     final String releaseDatePrecision;
@@ -93,7 +93,7 @@ class Album {
     final String type;
     final String uri;
 
-    Album({
+    TrackAlbum({
         required this.albumType,
         required this.artists,
         required this.availableMarkets,
@@ -109,14 +109,14 @@ class Album {
         required this.uri,
     });
 
-    factory Album.fromJson(Map<String, dynamic> json) => Album(
+    factory TrackAlbum.fromJson(Map<String, dynamic> json) => TrackAlbum(
         albumType: json["album_type"],
-        artists: List<Artist>.from(json["artists"].map((x) => Artist.fromJson(x))),
+        artists: List<TrackArtist>.from(json["artists"].map((x) => TrackArtist.fromJson(x))),
         availableMarkets: List<dynamic>.from(json["available_markets"].map((x) => x)),
-        externalUrls: ExternalUrls.fromJson(json["external_urls"]),
+        externalUrls: TrackExternalUrls.fromJson(json["external_urls"]),
         href: json["href"],
         id: json["id"],
-        images: List<Image>.from(json["images"].map((x) => Image.fromJson(x))),
+        images: List<TrackImage>.from(json["images"].map((x) => TrackImage.fromJson(x))),
         name: json["name"],
         releaseDate: DateTime.parse(json["release_date"]),
         releaseDatePrecision: json["release_date_precision"],
@@ -142,15 +142,15 @@ class Album {
     };
 }
 
-class Artist {
-    final ExternalUrls externalUrls;
+class TrackArtist {
+    final TrackExternalUrls externalUrls;
     final String href;
     final String id;
     final String name;
     final String type;
     final String uri;
 
-    Artist({
+    TrackArtist({
         required this.externalUrls,
         required this.href,
         required this.id,
@@ -159,8 +159,8 @@ class Artist {
         required this.uri,
     });
 
-    factory Artist.fromJson(Map<String, dynamic> json) => Artist(
-        externalUrls: ExternalUrls.fromJson(json["external_urls"]),
+    factory TrackArtist.fromJson(Map<String, dynamic> json) => TrackArtist(
+        externalUrls: TrackExternalUrls.fromJson(json["external_urls"]),
         href: json["href"],
         id: json["id"],
         name: json["name"],
@@ -178,14 +178,14 @@ class Artist {
     };
 }
 
-class ExternalUrls {
+class TrackExternalUrls {
     final String spotify;
 
-    ExternalUrls({
+    TrackExternalUrls({
         required this.spotify,
     });
 
-    factory ExternalUrls.fromJson(Map<String, dynamic> json) => ExternalUrls(
+    factory TrackExternalUrls.fromJson(Map<String, dynamic> json) => TrackExternalUrls(
         spotify: json["spotify"],
     );
 
@@ -194,18 +194,18 @@ class ExternalUrls {
     };
 }
 
-class Image {
+class TrackImage {
     final int height;
     final String url;
     final int width;
 
-    Image({
+    TrackImage({
         required this.height,
         required this.url,
         required this.width,
     });
 
-    factory Image.fromJson(Map<String, dynamic> json) => Image(
+    factory TrackImage.fromJson(Map<String, dynamic> json) => TrackImage(
         height: json["height"],
         url: json["url"],
         width: json["width"],
@@ -218,14 +218,14 @@ class Image {
     };
 }
 
-class ExternalIds {
+class TrackExternalIds {
     final String isrc;
 
-    ExternalIds({
+    TrackExternalIds({
         required this.isrc,
     });
 
-    factory ExternalIds.fromJson(Map<String, dynamic> json) => ExternalIds(
+    factory TrackExternalIds.fromJson(Map<String, dynamic> json) => TrackExternalIds(
         isrc: json["isrc"],
     );
 
