@@ -3,7 +3,7 @@ class Album {
   String albumType;
   String artistName;
   String urlAlbumSpotify;
-  String generes;
+  List<String> generes;
   String urlCover;
   String releaseDate;
   int numberOfTracks;
