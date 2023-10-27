@@ -12,13 +12,14 @@ class QueryOwnDatasource extends QueryDatasource {
   );
 
   @override
-  Future<List<OwnTrack>> getTrackIds(String query) async {
+  Future<List<OwnTrack>> getTracks(String query) async {
     try {
       final response = await dio.get('/search', queryParameters: {'q': query});
 
       if (response.statusCode == 200) {
         final List<QueryTrackResponse> queryTracks = response.data['results']
-            .map<QueryTrackResponse>((result) => QueryTrackResponse.fromJson(result))
+            .map<QueryTrackResponse>(
+                (result) => QueryTrackResponse.fromJson(result))
             .toList();
         final List<OwnTrack> ownTracks = queryTracks
             .map<OwnTrack>((result) => OwnTrack(
