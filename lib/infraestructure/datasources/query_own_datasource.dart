@@ -23,8 +23,8 @@ class QueryOwnDatasource extends QueryDatasource {
             .toList();
         final List<OwnTrack> ownTracks = queryTracks
             .map<OwnTrack>((result) => OwnTrack(
-                  track_id: result.trackId,
-                  album_track_id: result.trackAlbumId,
+                  trackId: result.trackId,
+                  albumTrackId: result.trackAlbumId,
                   lyrics: result.lyrics,
                 ))
             .toList();

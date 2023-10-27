@@ -139,11 +139,11 @@ class AlbumExternalUrls {
 }
 
 enum AlbumArtistType {
-    ARTIST
+    artist
 }
 
 final artistTypeValues = EnumValues({
-    "artist": AlbumArtistType.ARTIST
+    "artist": AlbumArtistType.artist
 });
 
 class Copyright {
@@ -315,11 +315,11 @@ class AlbumItem {
 }
 
 enum AlbumItemType {
-    TRACK
+    track
 }
 
 final itemTypeValues = EnumValues({
-    "track": AlbumItemType.TRACK
+    "track": AlbumItemType.track
 });
 
 class EnumValues<T> {
