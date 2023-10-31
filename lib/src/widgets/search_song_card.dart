@@ -17,12 +17,16 @@ class SearchSongCard extends StatelessWidget {
         child: Row(
           children: [
             // * Image
-            // TODO: REPLACE WITH IMAGE
-            Container(
+            Image.network(
+              songSummary.imageUrl,
               width: 50,
               height: 50,
-              color: Colors.grey,
             ),
+            // Container(
+            //   width: 50,
+            //   height: 50,
+            //   color: Colors.grey,
+            // ),
             const SizedBox(width: 16),
             // * Text
             Expanded(

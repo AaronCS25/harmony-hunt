@@ -1,19 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ir2/domain/entities/entities.dart';
+import 'package:ir2/src/providers/songs/song_providers.dart';
 import 'package:ir2/src/widgets/widgets.dart';
 
-class SearchViewLeft extends StatefulWidget {
+class SearchViewLeft extends ConsumerStatefulWidget {
   const SearchViewLeft({super.key});
 
   @override
-  State<SearchViewLeft> createState() => _SearchViewLeftState();
+  SearchViewLeftState createState() => SearchViewLeftState();
 }
 
-class _SearchViewLeftState extends State<SearchViewLeft> {
+class SearchViewLeftState extends ConsumerState<SearchViewLeft> {
   String selectedButton = 'All';
+  List<String> ls = [
+    "0017A6SJgTbfQVU2EtsPNo",
+    "004s3t0ONYlzxII9PLgU6z",
+    "00chLpzhgVjxs1zKC9UScL",
+    "00GfGwzlSB8DoA0cDP2Eit"
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    ref.read(songsByTracksProvider.notifier).loadSongsByTracks(ls);
+  }
 
   @override
   Widget build(BuildContext context) {
+    final songsByQuery = ref.watch(songsByTracksProvider);
+
     final textStyle = Theme.of(context).textTheme;
     return Padding(
       padding: const EdgeInsets.all(16),
@@ -56,15 +72,17 @@ class _SearchViewLeftState extends State<SearchViewLeft> {
           // * Query results
           Expanded(
             child: ListView.builder(
-              itemCount: 2,
+              itemCount: songsByQuery.length,
               itemBuilder: (context, index) {
-                // return SearchSongCard(
-                //   songSummary: SongSummary(
-                //       imageUrl: '',
-                //       title: 'Song name',
-                //       author: 'Author name',
-                //       duration: '3:00'),
-                // );
+                final song = songsByQuery[index];
+                return SearchSongCard(
+                  songSummary: SongSummary(
+                    imageUrl: song.urlCover,
+                    title: song.title,
+                    author: song.artistName,
+                    duration: song.songDuration.toString(),
+                  ),
+                );
                 // return SearchAlbumCard(
                 //   albumSummary: AlbumSummary(
                 //     imageUrl: '',
@@ -73,13 +91,13 @@ class _SearchViewLeftState extends State<SearchViewLeft> {
                 //     date: '2023',
                 //   ),
                 // );
-                return SearchAuthorCard(
-                  artistSummary: ArtistSummary(
-                    imageUrl: '',
-                    name: 'Malcom Todd',
-                    artistName: 'Nickname2',
-                  ),
-                );
+                // return SearchAuthorCard(
+                //   artistSummary: ArtistSummary(
+                //     imageUrl: '',
+                //     name: 'Malcom Todd',
+                //     artistName: 'Nickname2',
+                //   ),
+                // );
               },
             ),
           ),
