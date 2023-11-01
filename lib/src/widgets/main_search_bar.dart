@@ -37,6 +37,7 @@ class _SearchBarMainState extends State<SearchBarMain> {
           controller: controller,
           onSubmitted: (value) {
             //TODO: NO FUNCIONA EL ENTER
+            print('Submitted: $value');
           },
           onTap: () {
             controller.openView();
