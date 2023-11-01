@@ -5,10 +5,10 @@ class AlbumMapper {
   static Album spotifyAlbumToEntity(AlbumByIdResponse album) => Album(
         title: album.name,
         albumType: album.albumType,
-        artistName: album.artists.isNotEmpty ? album.artists.first.name : '',
+        artistName: album.artists.first.name,
         urlAlbumSpotify: album.externalUrls.spotify,
         generes: album.genres.cast<String>(),
-        urlCover: album.images.isNotEmpty ? album.images.first.url : '',
+        urlCover: album.images.first.url,
         releaseDate: album.releaseDate.toString(),
         numberOfTracks: album.totalTracks,
         popularity: album.popularity,

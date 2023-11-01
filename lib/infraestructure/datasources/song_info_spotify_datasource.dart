@@ -9,7 +9,7 @@ class SongInfoSpotifyDatasource extends SongInfoDatasource {
   final dio = Dio(
     BaseOptions(baseUrl: 'https://api.spotify.com/v1/', headers: {
       'Authorization':
-          'Bearer BQCbDkeiISAg8_tPOqN2W28Ac5uKEWemIJCSW7tbmfBAlpz6Dz7E2LtygTXbBGgD26ljlV2hsNsfjCYKc57u38YsHzfmIwZTiU4Qegsh8Z_1vV6zy50'
+          'Bearer BQDaXA_NGPwdbFcVEKztryXQWIppbTfLBZAEU4aTjVcFT1vKjvXRU9pg3XcIEvFiDZxxpH0TorHKF7E4Rscy1qTpREuIzl_zBCWGz5VyahxdbouBvbw'
     }),
   );
 
@@ -50,13 +50,12 @@ class SongInfoSpotifyDatasource extends SongInfoDatasource {
   Future<Album> getAlbum(String trackAlbumId) async {
     try {
       final response = await dio.get('albums/$trackAlbumId');
-
       if (response.statusCode == 200) {
         final albumByIdResponse = AlbumByIdResponse.fromJson(response.data);
         final album = AlbumMapper.spotifyAlbumToEntity(albumByIdResponse);
         return album;
       } else {
-        throw Exception('Failed to load album');
+        throw Exception('Failed to load album $trackAlbumId');
       }
     } catch (e) {
       throw Exception('Error getting album: $e');

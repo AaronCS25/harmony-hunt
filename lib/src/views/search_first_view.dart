@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ir2/domain/entities/entities.dart';
+import 'package:ir2/src/providers/albums/album_providers.dart';
 import 'package:ir2/src/providers/songs/song_providers.dart';
 import 'package:ir2/src/widgets/widgets.dart';
 
@@ -13,17 +14,38 @@ class SearchViewLeft extends ConsumerStatefulWidget {
 
 class SearchViewLeftState extends ConsumerState<SearchViewLeft> {
   String selectedButton = 'All';
-  List<String> ls = [
+  List<String> tracksIds = [
     "0017A6SJgTbfQVU2EtsPNo",
     "004s3t0ONYlzxII9PLgU6z",
     "00chLpzhgVjxs1zKC9UScL",
-    "00GfGwzlSB8DoA0cDP2Eit"
+    "00cqd6ZsSkLZqGMlQCR0Zo",
+    "00emjlCv9azBN0fzuuyLqy",
+    "00f9VGHfQhAHMCQ2bSjg3D",
+    "00FROhC5g4iJdax5US8jRr",
+    "00GfGwzlSB8DoA0cDP2Eit",
+    "00Gu3RMpDW2vO9PjlMVFDL",
+    "00GxbkrW4m1Tac5xySEJ4M",
+    "00hdjyXt6MohKnCyDmhxOL",
+    "00HIh9mVUQQAycsQiciWsh"
+  ];
+
+  List<String> albumsIds = [
+    "1srJQ0njEQgd8w4XSqI4JQ",
+    "3z04Lb9Dsilqw68SHt6jLB",
+    // "6oZ6brjB8x3GoeSYdwJdPc",
+    // "3ssspRe42CXkhPxdc12xcp",
+    // "7h5X3xhh3peIK9Y0qI5hbK",
+    // "3GNzXsFbzdwM0WKCZtgeNP",
+    // "2dHr0LpUe6CNV5lNsr8x0W",
+    // "51fAXJ5bMn7DRSunXQ6PMb",
+    // "5pqG85igfoeWcCDIsSi9x7"
   ];
 
   @override
   void initState() {
     super.initState();
-    ref.read(songsByTracksProvider.notifier).loadSongs(ls);
+    ref.read(songsByTracksProvider.notifier).loadSongs(tracksIds);
+    ref.read(albumByIdsProvider.notifier).loadAlbums(albumsIds);
   }
 
   @override
