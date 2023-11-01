@@ -12,8 +12,13 @@ class SearchViewLeft extends ConsumerStatefulWidget {
   SearchViewLeftState createState() => SearchViewLeftState();
 }
 
+enum ListType { songs, albums, artists, all }
+
 class SearchViewLeftState extends ConsumerState<SearchViewLeft> {
   String selectedButton = 'All';
+  ListType currentListType = ListType.songs;
+  List<dynamic> itemsByQuery = [];
+
   List<String> tracksIds = [
     "0017A6SJgTbfQVU2EtsPNo",
     "004s3t0ONYlzxII9PLgU6z",
@@ -32,13 +37,13 @@ class SearchViewLeftState extends ConsumerState<SearchViewLeft> {
   List<String> albumsIds = [
     "1srJQ0njEQgd8w4XSqI4JQ",
     "3z04Lb9Dsilqw68SHt6jLB",
-    // "6oZ6brjB8x3GoeSYdwJdPc",
-    // "3ssspRe42CXkhPxdc12xcp",
-    // "7h5X3xhh3peIK9Y0qI5hbK",
-    // "3GNzXsFbzdwM0WKCZtgeNP",
-    // "2dHr0LpUe6CNV5lNsr8x0W",
-    // "51fAXJ5bMn7DRSunXQ6PMb",
-    // "5pqG85igfoeWcCDIsSi9x7"
+    "6oZ6brjB8x3GoeSYdwJdPc",
+    "3ssspRe42CXkhPxdc12xcp",
+    "7h5X3xhh3peIK9Y0qI5hbK",
+    "3GNzXsFbzdwM0WKCZtgeNP",
+    "2dHr0LpUe6CNV5lNsr8x0W",
+    "51fAXJ5bMn7DRSunXQ6PMb",
+    "5pqG85igfoeWcCDIsSi9x7"
   ];
 
   @override
@@ -50,7 +55,7 @@ class SearchViewLeftState extends ConsumerState<SearchViewLeft> {
 
   @override
   Widget build(BuildContext context) {
-    final songsByQuery = ref.watch(songsByTracksProvider);
+    itemsByQuery = ref.watch(songsByTracksProvider);
 
     final textStyle = Theme.of(context).textTheme;
     return Padding(
@@ -81,10 +86,10 @@ class SearchViewLeftState extends ConsumerState<SearchViewLeft> {
                   spacing: 8.0,
                   runSpacing: 8.0,
                   children: [
-                    buildOutlinedButton('All'),
-                    buildOutlinedButton('Songs'),
-                    buildOutlinedButton('Authors'),
-                    buildOutlinedButton('Albums'),
+                    buildOutlinedButton('All', ListType.all),
+                    buildOutlinedButton('Songs', ListType.songs),
+                    buildOutlinedButton('Authors', ListType.artists),
+                    buildOutlinedButton('Albums', ListType.albums),
                   ],
                 ),
               ),
@@ -94,32 +99,48 @@ class SearchViewLeftState extends ConsumerState<SearchViewLeft> {
           // * Query results
           Expanded(
             child: ListView.builder(
-              itemCount: songsByQuery.length,
+              itemCount: itemsByQuery.length,
               itemBuilder: (context, index) {
-                final song = songsByQuery[index];
-                return SearchSongCard(
-                  songSummary: SongSummary(
-                    imageUrl: song.urlCover,
-                    title: song.title,
-                    author: song.artistName,
-                    duration: song.songDuration.toString(),
-                  ),
-                );
-                // return SearchAlbumCard(
-                //   albumSummary: AlbumSummary(
-                //     imageUrl: '',
-                //     title: 'Album name',
-                //     author: 'Malcom Todd',
-                //     date: '2023',
-                //   ),
-                // );
-                // return SearchAuthorCard(
-                //   artistSummary: ArtistSummary(
-                //     imageUrl: '',
-                //     name: 'Malcom Todd',
-                //     artistName: 'Nickname2',
-                //   ),
-                // );
+                final item = itemsByQuery[index];
+                switch (currentListType) {
+                  case ListType.songs:
+                    return SearchSongCard(
+                      songSummary: SongSummary(
+                        imageUrl: item.urlCover,
+                        title: item.title,
+                        author: item.artistName,
+                        duration: item.songDuration.toString(),
+                      ),
+                    );
+                  case ListType.albums:
+                    return SearchAlbumCard(
+                      albumSummary: AlbumSummary(
+                        imageUrl: item.urlCover,
+                        title: item.title,
+                        author: item.artistName,
+                        date: item.releaseDate,
+                      ),
+                    );
+                  case ListType.artists:
+                    return SearchAuthorCard(
+                      artistSummary: ArtistSummary(
+                        imageUrl: '',
+                        name: 'Malcom Todd',
+                        artistName: 'Nickname2',
+                      ),
+                    );
+                  case ListType.all:
+                    return SearchSongCard(
+                      songSummary: SongSummary(
+                        imageUrl: item.urlCover,
+                        title: item.title,
+                        author: item.artistName,
+                        duration: item.songDuration.toString(),
+                      ),
+                    );
+                  default:
+                    return const SizedBox.shrink();
+                }
               },
             ),
           ),
@@ -128,8 +149,8 @@ class SearchViewLeftState extends ConsumerState<SearchViewLeft> {
     );
   }
 
-  Widget buildOutlinedButton(String label) {
-    final isSelected = selectedButton == label;
+  Widget buildOutlinedButton(String label, ListType listType) {
+    final isSelected = currentListType == listType;
     final baseColor = isSelected ? Colors.blue : Colors.grey;
     final color = isSelected ? Colors.blue : Colors.grey.withOpacity(0.6);
     final textStyle = Theme.of(context).textTheme;
@@ -138,6 +159,16 @@ class SearchViewLeftState extends ConsumerState<SearchViewLeft> {
       onPressed: () {
         setState(() {
           selectedButton = label;
+          currentListType = listType;
+          if (listType == ListType.songs) {
+            itemsByQuery = ref.watch(songsByTracksProvider);
+          } else if (listType == ListType.albums) {
+            itemsByQuery = ref.watch(albumByIdsProvider);
+          } else if (listType == ListType.artists) {
+            itemsByQuery = ref.watch(songsByTracksProvider);
+          } else if (listType == ListType.all) {
+            itemsByQuery = ref.watch(songsByTracksProvider);
+          }
         });
       },
       style: OutlinedButton.styleFrom(

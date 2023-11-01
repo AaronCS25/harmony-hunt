@@ -17,11 +17,10 @@ class SearchAlbumCard extends StatelessWidget {
         child: Row(
           children: [
             // * Image
-            // TODO: REPLACE WITH IMAGE
-            Container(
-              width: 50,
-              height: 50,
-              color: Colors.grey,
+            Image.network(
+              albumSummary.imageUrl,
+              width: 64,
+              height: 64,
             ),
             const SizedBox(width: 16),
             // * Title - subtitle

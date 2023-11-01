@@ -19,8 +19,8 @@ class SearchSongCard extends StatelessWidget {
             // * Image
             Image.network(
               songSummary.imageUrl,
-              width: 50,
-              height: 50,
+              width: 64,
+              height: 64,
             ),
             // Container(
             //   width: 50,
