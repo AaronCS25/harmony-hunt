@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ir2/domain/entities/entities.dart';
-import 'package:ir2/src/providers/songs/song_repository_provider.dart';
+import 'package:ir2/src/providers/providers.dart';
 
 final songDetailProvider =
     StateNotifierProvider<SongMapperNotifier, Map<String, Song>>((ref) {
@@ -10,9 +10,9 @@ final songDetailProvider =
 
 /*
 {
-  'A101': Song,
-  'A102': Song,
-  'A103': Song,
+  'S101': Song,
+  'S102': Song,
+  'S103': Song,
   ...
 }
 */

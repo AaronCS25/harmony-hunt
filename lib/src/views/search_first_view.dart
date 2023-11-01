@@ -23,7 +23,7 @@ class SearchViewLeftState extends ConsumerState<SearchViewLeft> {
   @override
   void initState() {
     super.initState();
-    ref.read(songsByTracksProvider.notifier).loadSongsByTracks(ls);
+    ref.read(songsByTracksProvider.notifier).loadSongs(ls);
   }
 
   @override
