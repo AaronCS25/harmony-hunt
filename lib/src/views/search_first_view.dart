@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:ir2/domain/entities/entities.dart';
 import 'package:ir2/src/providers/albums/album_providers.dart';
 import 'package:ir2/src/providers/songs/song_providers.dart';
@@ -60,7 +61,9 @@ class SearchViewLeftState extends ConsumerState<SearchViewLeft> {
         children: [
           // *Back button
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              context.go('/home');
+            },
             icon: const Icon(Icons.arrow_back),
           ),
           const SizedBox(height: 16),
