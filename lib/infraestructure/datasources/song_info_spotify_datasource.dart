@@ -9,7 +9,7 @@ class SongInfoSpotifyDatasource extends SongInfoDatasource {
   final dio = Dio(
     BaseOptions(baseUrl: 'https://api.spotify.com/v1/', headers: {
       'Authorization':
-          'Bearer BQDaXA_NGPwdbFcVEKztryXQWIppbTfLBZAEU4aTjVcFT1vKjvXRU9pg3XcIEvFiDZxxpH0TorHKF7E4Rscy1qTpREuIzl_zBCWGz5VyahxdbouBvbw'
+          'Bearer BQBnq2UZJKdCBut908QLoirhp3YNb-ugGZLpE1Tp_he_US83FP0zz-7bcRxE8Ki6DYTT6Yt8hkNpjYC-2bqS666xBDI7JwtuKhBzerYooutrYrHul9Q'
     }),
   );
 

@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ir2/domain/entities/entities.dart';
-import 'package:ir2/src/providers/albums/album_providers.dart';
-import 'package:ir2/src/providers/songs/song_providers.dart';
+import 'package:ir2/src/providers/providers.dart';
 import 'package:ir2/src/widgets/widgets.dart';
+
+enum ButtonType { songs, authors, albums }
 
 class SearchViewLeft extends ConsumerStatefulWidget {
   const SearchViewLeft({super.key});
@@ -14,7 +15,11 @@ class SearchViewLeft extends ConsumerStatefulWidget {
 }
 
 class SearchViewLeftState extends ConsumerState<SearchViewLeft> {
-  String selectedButton = 'All';
+  final TextEditingController _searchController = TextEditingController();
+
+  ButtonType selectedButton = ButtonType.songs;
+  bool valor = false;
+
   List<String> tracksIds = [
     "0017A6SJgTbfQVU2EtsPNo",
     "004s3t0ONYlzxII9PLgU6z",
@@ -33,13 +38,13 @@ class SearchViewLeftState extends ConsumerState<SearchViewLeft> {
   List<String> albumsIds = [
     "1srJQ0njEQgd8w4XSqI4JQ",
     "3z04Lb9Dsilqw68SHt6jLB",
-    // "6oZ6brjB8x3GoeSYdwJdPc",
-    // "3ssspRe42CXkhPxdc12xcp",
-    // "7h5X3xhh3peIK9Y0qI5hbK",
-    // "3GNzXsFbzdwM0WKCZtgeNP",
-    // "2dHr0LpUe6CNV5lNsr8x0W",
-    // "51fAXJ5bMn7DRSunXQ6PMb",
-    // "5pqG85igfoeWcCDIsSi9x7"
+    "6oZ6brjB8x3GoeSYdwJdPc",
+    "3ssspRe42CXkhPxdc12xcp",
+    "7h5X3xhh3peIK9Y0qI5hbK",
+    "3GNzXsFbzdwM0WKCZtgeNP",
+    "2dHr0LpUe6CNV5lNsr8x0W",
+    "51fAXJ5bMn7DRSunXQ6PMb",
+    "5pqG85igfoeWcCDIsSi9x7"
   ];
 
   @override
@@ -47,11 +52,13 @@ class SearchViewLeftState extends ConsumerState<SearchViewLeft> {
     super.initState();
     ref.read(songsByTracksProvider.notifier).loadSongs(tracksIds);
     ref.read(albumByIdsProvider.notifier).loadAlbums(albumsIds);
+    _searchController.text = ref.read(searchQueryProvider);
   }
 
   @override
   Widget build(BuildContext context) {
     final songsByQuery = ref.watch(songsByTracksProvider);
+    final albumsByQuery = ref.watch(albumByIdsProvider);
 
     final textStyle = Theme.of(context).textTheme;
     return Padding(
@@ -70,10 +77,17 @@ class SearchViewLeftState extends ConsumerState<SearchViewLeft> {
           // * Search bar
           TextField(
             style: textStyle.bodyMedium,
+            controller: _searchController,
             decoration: const InputDecoration(
               hintText: 'Search...',
               border: OutlineInputBorder(),
             ),
+            onSubmitted: (value) {
+              if (value.isNotEmpty) {
+                ref.read(searchQueryProvider.notifier).state = value;
+                // TODO: AGREGAR NUEVA BUSQUEDA.
+              }
+            },
           ),
           const SizedBox(height: 16),
           // * Selection Button
@@ -84,10 +98,26 @@ class SearchViewLeftState extends ConsumerState<SearchViewLeft> {
                   spacing: 8.0,
                   runSpacing: 8.0,
                   children: [
-                    buildOutlinedButton('All'),
-                    buildOutlinedButton('Songs'),
-                    buildOutlinedButton('Authors'),
-                    buildOutlinedButton('Albums'),
+                    buildOutlinedButton('Songs', ButtonType.songs),
+                    // buildOutlinedButton('Albums', ButtonType.albums),
+                    // buildOutlinedButton('Authors', ButtonType.authors),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text('Own', style: textStyle.bodySmall),
+                        Switch.adaptive(
+                          value: valor,
+                          onChanged: (value) {
+                            setState(() {
+                              valor = value;
+                            });
+                          },
+                          activeTrackColor: Colors.blueAccent,
+                          activeColor: Colors.black,
+                        ),
+                        Text('Postgres', style: textStyle.bodySmall),
+                      ],
+                    ),
                   ],
                 ),
               ),
@@ -97,32 +127,36 @@ class SearchViewLeftState extends ConsumerState<SearchViewLeft> {
           // * Query results
           Expanded(
             child: ListView.builder(
-              itemCount: songsByQuery.length,
+              itemCount: selectedButton == ButtonType.songs
+                  ? songsByQuery.length
+                  : selectedButton == ButtonType.albums
+                      ? albumsByQuery.length
+                      : 0,
               itemBuilder: (context, index) {
-                final song = songsByQuery[index];
-                return SearchSongCard(
-                  songSummary: SongSummary(
-                    imageUrl: song.urlCover,
-                    title: song.title,
-                    author: song.artistName,
-                    duration: song.songDuration.toString(),
-                  ),
-                );
-                // return SearchAlbumCard(
-                //   albumSummary: AlbumSummary(
-                //     imageUrl: '',
-                //     title: 'Album name',
-                //     author: 'Malcom Todd',
-                //     date: '2023',
-                //   ),
-                // );
-                // return SearchAuthorCard(
-                //   artistSummary: ArtistSummary(
-                //     imageUrl: '',
-                //     name: 'Malcom Todd',
-                //     artistName: 'Nickname2',
-                //   ),
-                // );
+                switch (selectedButton) {
+                  case ButtonType.songs:
+                    final Song song = songsByQuery[index];
+                    return SearchSongCard(
+                      songSummary: SongSummary(
+                        imageUrl: song.urlCover,
+                        title: song.title,
+                        author: song.artistName,
+                        duration: song.songDuration.toString(),
+                      ),
+                    );
+                  case ButtonType.albums:
+                    final Album album = albumsByQuery[index];
+                    return SearchAlbumCard(
+                      albumSummary: AlbumSummary(
+                        imageUrl: album.urlCover,
+                        title: album.title,
+                        author: album.artistName,
+                        date: album.releaseDate,
+                      ),
+                    );
+                  default:
+                    return const Text('No results');
+                }
               },
             ),
           ),
@@ -131,8 +165,8 @@ class SearchViewLeftState extends ConsumerState<SearchViewLeft> {
     );
   }
 
-  Widget buildOutlinedButton(String label) {
-    final isSelected = selectedButton == label;
+  Widget buildOutlinedButton(String label, ButtonType type) {
+    final isSelected = selectedButton == type;
     final baseColor = isSelected ? Colors.blue : Colors.grey;
     final color = isSelected ? Colors.blue : Colors.grey.withOpacity(0.6);
     final textStyle = Theme.of(context).textTheme;
@@ -140,7 +174,7 @@ class SearchViewLeftState extends ConsumerState<SearchViewLeft> {
     return OutlinedButton(
       onPressed: () {
         setState(() {
-          selectedButton = label;
+          selectedButton = type;
         });
       },
       style: OutlinedButton.styleFrom(

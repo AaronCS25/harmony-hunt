@@ -1,12 +1,14 @@
-import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter/material.dart';
+import 'package:ir2/src/providers/providers.dart';
 
-class SearchBarMain extends StatelessWidget {
-  const SearchBarMain({super.key});
+class MainSearchBar extends ConsumerWidget {
+  const MainSearchBar({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 128.0),
       child: TextField(
@@ -56,6 +58,7 @@ class SearchBarMain extends StatelessWidget {
           // TODO: Implement search
           print('Submitted: $value');
           if (value.isNotEmpty) {
+            ref.read(searchQueryProvider.notifier).state = value;
             context.go('/search');
           } else {
             print('Empty search');

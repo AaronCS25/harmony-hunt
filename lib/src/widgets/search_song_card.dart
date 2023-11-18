@@ -22,11 +22,6 @@ class SearchSongCard extends StatelessWidget {
               width: 50,
               height: 50,
             ),
-            // Container(
-            //   width: 50,
-            //   height: 50,
-            //   color: Colors.grey,
-            // ),
             const SizedBox(width: 16),
             // * Text
             Expanded(
