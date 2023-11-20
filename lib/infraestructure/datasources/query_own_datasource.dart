@@ -5,28 +5,23 @@ import 'package:dio/dio.dart';
 
 class QueryOwnDatasource extends QueryDatasource {
   final dio = Dio(
-    BaseOptions(
-      // TODO: Cambiar por la url de la api.
-      baseUrl: 'my-own-api.com',
-    ),
+    BaseOptions(baseUrl: 'https://1784-204-199-168-25.ngrok-free.app/'),
   );
 
   @override
   Future<List<OwnTrack>> getTracks(String query) async {
     try {
-      final response = await dio.get('/search', queryParameters: {'q': query});
+      final response =
+          await dio.get('local/text', queryParameters: {'keywords': query});
 
       if (response.statusCode == 200) {
-        final List<QueryTrackResponse> queryTracks = response.data['results']
+        final List<QueryTrackResponse> queryTracks = response.data
             .map<QueryTrackResponse>(
                 (result) => QueryTrackResponse.fromJson(result))
             .toList();
         final List<OwnTrack> ownTracks = queryTracks
-            .map<OwnTrack>((result) => OwnTrack(
-                  trackId: result.trackId,
-                  albumTrackId: result.trackAlbumId,
-                  lyrics: result.lyrics,
-                ))
+            .map<OwnTrack>((result) =>
+                OwnTrack(trackId: result.trackId, score: result.score))
             .toList();
         return ownTracks;
       } else {

@@ -5,7 +5,6 @@ class OwnTrackMapper {
   static OwnTrack queryTrackToOwnTrack(QueryTrackResponse queryTrack) =>
       OwnTrack(
         trackId: queryTrack.trackId,
-        albumTrackId: queryTrack.trackAlbumId,
-        lyrics: queryTrack.lyrics,
+        score: queryTrack.score,
       );
 }
