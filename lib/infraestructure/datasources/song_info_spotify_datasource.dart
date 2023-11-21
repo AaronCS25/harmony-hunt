@@ -20,7 +20,9 @@ class SongInfoSpotifyDatasource extends SongInfoDatasource {
 
       if (response.statusCode == 200) {
         final trackByIdResponse = TrackByIdResponse.fromJson(response.data);
+        print('songs: ${response.data}');
         final song = SongMapper.spotifyTrackToEntity(trackByIdResponse);
+        print('ok');
         return song;
       } else {
         throw Exception('Failed to load track');
