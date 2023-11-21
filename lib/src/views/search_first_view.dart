@@ -20,20 +20,7 @@ class SearchViewLeftState extends ConsumerState<SearchViewLeft> {
   ButtonType selectedButton = ButtonType.songs;
   bool valor = false;
 
-  List<String> tracksIds = [
-    "0017A6SJgTbfQVU2EtsPNo",
-    "004s3t0ONYlzxII9PLgU6z",
-    "00chLpzhgVjxs1zKC9UScL",
-    "00cqd6ZsSkLZqGMlQCR0Zo",
-    "00emjlCv9azBN0fzuuyLqy",
-    "00f9VGHfQhAHMCQ2bSjg3D",
-    "00FROhC5g4iJdax5US8jRr",
-    "00GfGwzlSB8DoA0cDP2Eit",
-    "00Gu3RMpDW2vO9PjlMVFDL",
-    "00GxbkrW4m1Tac5xySEJ4M",
-    "00hdjyXt6MohKnCyDmhxOL",
-    "00HIh9mVUQQAycsQiciWsh"
-  ];
+  List<String> tracksIds = [];
 
   List<String> albumsIds = [
     "1srJQ0njEQgd8w4XSqI4JQ",
@@ -47,12 +34,28 @@ class SearchViewLeftState extends ConsumerState<SearchViewLeft> {
     "5pqG85igfoeWcCDIsSi9x7"
   ];
 
+  void updateSearchResults(String newValue) {
+    ref.read(searchQueryProvider.notifier).state =
+        newValue; // actualiza el search
+    ref
+        .read(tracksByQueryProvider.notifier) // busca los tracks
+        .loadTracks(newValue)
+        .then((_) {
+      tracksIds = ref
+          .read(tracksByQueryProvider)
+          .map((ownTrack) => ownTrack.trackId)
+          .toList(); // actualiza los tracks
+      ref
+          .read(songsByTracksProvider.notifier)
+          .loadSongs(tracksIds); // actualiza las canciones
+    });
+  }
+
   @override
   void initState() {
     super.initState();
-    ref.read(songsByTracksProvider.notifier).loadSongs(tracksIds);
-    ref.read(albumByIdsProvider.notifier).loadAlbums(albumsIds);
     _searchController.text = ref.read(searchQueryProvider);
+    updateSearchResults(_searchController.text);
   }
 
   @override
@@ -84,8 +87,9 @@ class SearchViewLeftState extends ConsumerState<SearchViewLeft> {
             ),
             onSubmitted: (value) {
               if (value.isNotEmpty) {
-                ref.read(searchQueryProvider.notifier).state = value;
-                // TODO: AGREGAR NUEVA BUSQUEDA.
+                // ref.read(searchQueryProvider.notifier).state = value;
+                updateSearchResults(value);
+                print('Nueva Busqueda: $value');
               }
             },
           ),

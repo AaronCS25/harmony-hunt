@@ -5,7 +5,11 @@ import 'package:dio/dio.dart';
 
 class QueryOwnDatasource extends QueryDatasource {
   final dio = Dio(
-    BaseOptions(baseUrl: 'https://1784-204-199-168-25.ngrok-free.app/'),
+    BaseOptions(
+      baseUrl: "http://3.21.206.236:8000/",
+      connectTimeout: const Duration(seconds: 10),
+      receiveTimeout: const Duration(seconds: 3),
+    ),
   );
 
   @override
@@ -13,7 +17,6 @@ class QueryOwnDatasource extends QueryDatasource {
     try {
       final response =
           await dio.get('local/text', queryParameters: {'keywords': query});
-
       if (response.statusCode == 200) {
         final List<QueryTrackResponse> queryTracks = response.data
             .map<QueryTrackResponse>(
@@ -28,7 +31,7 @@ class QueryOwnDatasource extends QueryDatasource {
         throw Exception('Error al obtener los IDs de las canciones');
       }
     } catch (e) {
-      throw Exception('Error de red: $e');
+      throw Exception('Error de red - query own datasource: $e');
     }
   }
 }
