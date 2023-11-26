@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ir2/config/helpers/human_formats.dart';
 import 'package:ir2/domain/entities/entities.dart';
 import 'package:ir2/src/providers/providers.dart';
 
@@ -37,6 +38,7 @@ class SearchSongCard extends ConsumerWidget {
                   children: [
                     Text(
                       songSummary.title,
+                      overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                     const SizedBox(height: 8),
@@ -49,7 +51,7 @@ class SearchSongCard extends ConsumerWidget {
               ),
               //* Duration
               Text(
-                songSummary.duration,
+                HumanFormats.reproductionTime(songSummary.duration),
                 style: Theme.of(context).textTheme.bodySmall,
               ),
               // * Button
