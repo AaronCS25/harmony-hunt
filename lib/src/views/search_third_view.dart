@@ -17,7 +17,7 @@ class SearchInfoViewState extends ConsumerState<SearchInfoView> {
   void initState() {
     super.initState();
     trackId = ref.read(selectedSongByTrackIdProvider);
-    // ref.read(songInfoProvider.notifier).loadSong(trackId!);
+    ref.read(songInfoProvider.notifier).loadSong(trackId!);
   }
 
   @override
