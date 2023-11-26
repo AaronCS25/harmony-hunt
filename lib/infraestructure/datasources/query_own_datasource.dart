@@ -7,8 +7,8 @@ class QueryOwnDatasource extends QueryDatasource {
   final dio = Dio(
     BaseOptions(
       baseUrl: "http://3.21.206.236:8000/",
-      connectTimeout: const Duration(seconds: 10),
-      receiveTimeout: const Duration(seconds: 3),
+      // connectTimeout: const Duration(seconds: 10),
+      // receiveTimeout: const Duration(seconds: 3),
     ),
   );
 

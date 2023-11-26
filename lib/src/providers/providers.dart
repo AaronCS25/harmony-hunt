@@ -10,3 +10,5 @@ export 'tracks/track_providers.dart';
 export 'tracks/track_repository_provider.dart';
 
 export 'search_query_provider.dart';
+
+export 'song_total_info_provider.dart';

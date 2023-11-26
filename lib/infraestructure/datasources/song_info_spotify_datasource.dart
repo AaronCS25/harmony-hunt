@@ -9,7 +9,7 @@ class SongInfoSpotifyDatasource extends SongInfoDatasource {
   final dio = Dio(
     BaseOptions(baseUrl: 'https://api.spotify.com/v1/', headers: {
       'Authorization':
-          'Bearer BQBpcciExuSgexQK1tEYu5Q1xLVwXQuyhFcU_0KkrMQmG1ynPgLTidVQeq5Ep5f_-FuhiMl-ZHUS8Pj9vTwSH9mkuP0VA9cv65yi5-rv65ZnpTQhP7w'
+          'Bearer BQCUiVaw50QdSPuwHxPUpWe1LLtU3a9LOiRdQ7-748WaZr2xw_lLZ3L4MSO63f-g3D7g_QBzOd63C4t2WVF6LQzTEez2cLr2AIDXWpYV0_a-gwql46k'
     }),
   );
 
@@ -20,9 +20,7 @@ class SongInfoSpotifyDatasource extends SongInfoDatasource {
 
       if (response.statusCode == 200) {
         final trackByIdResponse = TrackByIdResponse.fromJson(response.data);
-        print('songs: ${response.data}');
         final song = SongMapper.spotifyTrackToEntity(trackByIdResponse);
-        print('ok');
         return song;
       } else {
         throw Exception('Failed to load track');

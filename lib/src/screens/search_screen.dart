@@ -12,8 +12,6 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   bool isDivided = false;
 
-  
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +26,7 @@ class _SearchScreenState extends State<SearchScreen> {
           Expanded(
             flex: 2,
             child: Container(
-                color: Colors.green,
+                // color: Colors.green,
                 child: isDivided
                     ? Row(
                         children: [
@@ -42,9 +40,9 @@ class _SearchScreenState extends State<SearchScreen> {
                           ),
                           Expanded(
                             child: Container(
-                              color: Colors.yellow,
+                              // color: Colors.black,
                               child: const Center(
-                                child: Text('1/3'),
+                                child: SearchInfoView(),
                               ),
                             ),
                           ),

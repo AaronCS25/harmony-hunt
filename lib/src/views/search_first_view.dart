@@ -22,17 +22,17 @@ class SearchViewLeftState extends ConsumerState<SearchViewLeft> {
 
   List<String> tracksIds = [];
 
-  List<String> albumsIds = [
-    "1srJQ0njEQgd8w4XSqI4JQ",
-    "3z04Lb9Dsilqw68SHt6jLB",
-    "6oZ6brjB8x3GoeSYdwJdPc",
-    "3ssspRe42CXkhPxdc12xcp",
-    "7h5X3xhh3peIK9Y0qI5hbK",
-    "3GNzXsFbzdwM0WKCZtgeNP",
-    "2dHr0LpUe6CNV5lNsr8x0W",
-    "51fAXJ5bMn7DRSunXQ6PMb",
-    "5pqG85igfoeWcCDIsSi9x7"
-  ];
+  // List<String> albumsIds = [
+  //   "1srJQ0njEQgd8w4XSqI4JQ",
+  //   "3z04Lb9Dsilqw68SHt6jLB",
+  //   "6oZ6brjB8x3GoeSYdwJdPc",
+  //   "3ssspRe42CXkhPxdc12xcp",
+  //   "7h5X3xhh3peIK9Y0qI5hbK",
+  //   "3GNzXsFbzdwM0WKCZtgeNP",
+  //   "2dHr0LpUe6CNV5lNsr8x0W",
+  //   "51fAXJ5bMn7DRSunXQ6PMb",
+  //   "5pqG85igfoeWcCDIsSi9x7"
+  // ];
 
   void updateSearchResults(String newValue) {
     ref.read(searchQueryProvider.notifier).state =
@@ -87,9 +87,7 @@ class SearchViewLeftState extends ConsumerState<SearchViewLeft> {
             ),
             onSubmitted: (value) {
               if (value.isNotEmpty) {
-                // ref.read(searchQueryProvider.notifier).state = value;
                 updateSearchResults(value);
-                print('Nueva Busqueda: $value');
               }
             },
           ),
