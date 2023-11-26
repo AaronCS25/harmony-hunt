@@ -100,7 +100,7 @@ class SearchViewLeftState extends ConsumerState<SearchViewLeft> {
                   spacing: 8.0,
                   runSpacing: 8.0,
                   children: [
-                    buildOutlinedButton('Songs', ButtonType.songs),
+                    // buildOutlinedButton('Songs', ButtonType.songs),
                     // buildOutlinedButton('Albums', ButtonType.albums),
                     // buildOutlinedButton('Authors', ButtonType.authors),
                     Row(
@@ -144,6 +144,7 @@ class SearchViewLeftState extends ConsumerState<SearchViewLeft> {
                         title: song.title,
                         author: song.artistName,
                         duration: song.songDuration.toString(),
+                        id: song.id,
                       ),
                     );
                   case ButtonType.albums:
