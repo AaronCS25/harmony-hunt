@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ir2/domain/entities/entities.dart';
 import 'package:ir2/src/providers/providers.dart';
 
-final songDetailProvider =
+final songInfoProvider =
     StateNotifierProvider<SongMapperNotifier, Map<String, Song>>((ref) {
   final getSong = ref.watch(songRepositoryProvider).getSong;
   return SongMapperNotifier(getSong: getSong);
@@ -25,6 +25,8 @@ class SongMapperNotifier extends StateNotifier<Map<String, Song>> {
   final GetSongCallBack getSong;
 
   Future<void> loadSong(String trackId) async {
+    if (state[trackId] != null) return;
+    print('loadSong: $trackId');
     final Song song = await getSong(trackId);
     state = {...state, trackId: song};
   }

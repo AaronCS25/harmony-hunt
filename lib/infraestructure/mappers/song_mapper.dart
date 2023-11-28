@@ -3,6 +3,7 @@ import 'package:ir2/infraestructure/models/models.dart';
 
 class SongMapper {
   static Song spotifyTrackToEntity(TrackByIdResponse track) => Song(
+        id: track.id,
         title: track.name,
         artistName: track.artists.first.name,
         urlArtistPageSpotify: track.externalUrls.spotify,

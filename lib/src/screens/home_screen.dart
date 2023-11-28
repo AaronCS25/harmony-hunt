@@ -20,7 +20,7 @@ class HomeScreen extends StatelessWidget {
               style: textStyle.headlineLarge,
             ),
             const SizedBox(height: 16),
-            const SearchBarMain(),
+            const MainSearchBar(),
           ],
         ),
       ),

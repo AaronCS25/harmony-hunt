@@ -1,4 +1,5 @@
 class Song {
+  String id;
   String title;
   String artistName;
   String urlArtistPageSpotify;
@@ -13,6 +14,7 @@ class Song {
   String urlCover;
 
   Song({
+    required this.id,
     required this.title,
     required this.artistName,
     required this.urlArtistPageSpotify,
