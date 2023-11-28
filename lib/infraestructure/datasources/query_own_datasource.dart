@@ -6,10 +6,11 @@ import 'package:dio/dio.dart';
 class QueryOwnDatasource extends QueryDatasource {
   final dio = Dio(
     BaseOptions(
-      baseUrl: "http://3.21.206.236:8000/",
-      // connectTimeout: const Duration(seconds: 10),
-      // receiveTimeout: const Duration(seconds: 3),
-    ),
+        // baseUrl: "http://3.21.206.236:8000/",
+        baseUrl: "https://z5dmtg4z-8000.brs.devtunnels.ms/",
+        // connectTimeout: const Duration(seconds: 10),
+        // receiveTimeout: const Duration(seconds: 3),
+        ),
   );
 
   @override

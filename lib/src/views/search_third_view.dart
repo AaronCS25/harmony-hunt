@@ -11,13 +11,15 @@ class SearchInfoView extends ConsumerStatefulWidget {
 }
 
 class SearchInfoViewState extends ConsumerState<SearchInfoView> {
-  String? trackId;
+  String trackId = '';
 
   @override
   void initState() {
     super.initState();
     trackId = ref.read(selectedSongByTrackIdProvider);
-    ref.read(songInfoProvider.notifier).loadSong(trackId!);
+    if (trackId != '') {
+      ref.read(songInfoProvider.notifier).loadSong(trackId);
+    }
   }
 
   @override
@@ -29,7 +31,8 @@ class SearchInfoViewState extends ConsumerState<SearchInfoView> {
       ref.read(songInfoProvider.notifier).loadSong(newTrackId);
     }
 
-    final Song? song = ref.watch(songInfoProvider)[newTrackId];
+    final Song? song =
+        newTrackId != '' ? ref.watch(songInfoProvider)[newTrackId] : null;
 
     if (song == null) {
       return const Center(child: CircularProgressIndicator());

@@ -33,9 +33,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           Expanded(
                             child: Container(
                               color: Colors.red,
-                              child: const Center(
-                                child: Text('1/3'),
-                              ),
+                              child: const Text('1/3'),
                             ),
                           ),
                           Expanded(
