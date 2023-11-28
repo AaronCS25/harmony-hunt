@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ir2/config/helpers/human_formats.dart';
 import 'package:ir2/domain/entities/entities.dart';
-import 'package:ir2/src/providers/providers.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SimilarSongCard extends ConsumerWidget {
   const SimilarSongCard({
@@ -16,8 +16,18 @@ class SimilarSongCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Card(
       child: InkWell(
-        onTap: () {
-          
+        onTap: () async {
+          final Uri url = Uri.parse(songSummary.urlToSongSpotify);
+          try {
+            if (await canLaunchUrl(url)) {
+              await launchUrl(url);
+            } else {
+              throw 'Could not launch $url';
+            }
+          } catch (e) {
+            // Manejar la excepción
+            print(e);
+          }
         },
         child: Padding(
           padding: const EdgeInsets.all(16),

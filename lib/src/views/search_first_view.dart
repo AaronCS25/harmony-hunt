@@ -142,6 +142,7 @@ class SearchViewLeftState extends ConsumerState<SearchViewLeft> {
                       songSummary: SongSummary(
                         imageUrl: song.urlCover,
                         title: song.title,
+                        urlToSongSpotify: song.urlToSongSpotify,
                         author: song.artistName,
                         duration: song.songDuration.toString(),
                         id: song.id,

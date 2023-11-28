@@ -3,6 +3,7 @@ class SongSummary {
   String title;
   String author;
   String duration;
+  String urlToSongSpotify;
   String id;
 
   SongSummary({
@@ -10,6 +11,7 @@ class SongSummary {
     required this.title,
     required this.author,
     required this.duration,
+    required this.urlToSongSpotify,
     required this.id,
   });
 }

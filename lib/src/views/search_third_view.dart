@@ -116,29 +116,35 @@ class SearchInfoViewState extends ConsumerState<SearchInfoView> {
             if (songsSimilarByTrackId.isNotEmpty)
               SimilarSongCard(
                 songSummary: SongSummary(
-                    imageUrl: songsSimilarByTrackId[0].urlCover,
-                    title: songsSimilarByTrackId[0].title,
-                    author: songsSimilarByTrackId[0].artistName,
-                    duration: songsSimilarByTrackId[0].songDuration.toString(),
-                    id: songsSimilarByTrackId[0].id),
+                  imageUrl: songsSimilarByTrackId[0].urlCover,
+                  title: songsSimilarByTrackId[0].title,
+                  author: songsSimilarByTrackId[0].artistName,
+                  duration: songsSimilarByTrackId[0].songDuration.toString(),
+                  id: songsSimilarByTrackId[0].id,
+                  urlToSongSpotify: songsSimilarByTrackId[0].urlToSongSpotify,
+                ),
               ),
             if (songsSimilarByTrackId.length >= 2)
               SimilarSongCard(
                 songSummary: SongSummary(
-                    imageUrl: songsSimilarByTrackId[1].urlCover,
-                    title: songsSimilarByTrackId[1].title,
-                    author: songsSimilarByTrackId[1].artistName,
-                    duration: songsSimilarByTrackId[1].songDuration.toString(),
-                    id: songsSimilarByTrackId[1].id),
+                  imageUrl: songsSimilarByTrackId[1].urlCover,
+                  title: songsSimilarByTrackId[1].title,
+                  author: songsSimilarByTrackId[1].artistName,
+                  duration: songsSimilarByTrackId[1].songDuration.toString(),
+                  id: songsSimilarByTrackId[1].id,
+                  urlToSongSpotify: songsSimilarByTrackId[1].urlToSongSpotify,
+                ),
               ),
             if (songsSimilarByTrackId.length >= 3)
               SimilarSongCard(
                 songSummary: SongSummary(
-                    imageUrl: songsSimilarByTrackId[2].urlCover,
-                    title: songsSimilarByTrackId[2].title,
-                    author: songsSimilarByTrackId[2].artistName,
-                    duration: songsSimilarByTrackId[2].songDuration.toString(),
-                    id: songsSimilarByTrackId[2].id),
+                  imageUrl: songsSimilarByTrackId[2].urlCover,
+                  title: songsSimilarByTrackId[2].title,
+                  author: songsSimilarByTrackId[2].artistName,
+                  duration: songsSimilarByTrackId[2].songDuration.toString(),
+                  id: songsSimilarByTrackId[2].id,
+                  urlToSongSpotify: songsSimilarByTrackId[2].urlToSongSpotify,
+                ),
               ),
           ],
         ),
